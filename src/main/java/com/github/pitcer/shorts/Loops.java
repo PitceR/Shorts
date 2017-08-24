@@ -153,6 +153,18 @@ public final class Loops
 		return transformed;
 	}
 
+	public static <T> String build(T[] array, Function<T, String> transformer)
+	{
+		Objects.requireNonNull(array);
+		Objects.requireNonNull(transformer);
+		StringBuilder builder = new StringBuilder();
+		for(T element : array)
+		{
+			builder.append(transformer.apply(element));
+		}
+		return builder.toString();
+	}
+
 	public static <T> String build(List<T> list, Function<T, String> transformer)
 	{
 		Objects.requireNonNull(list);
@@ -163,6 +175,23 @@ public final class Loops
 			builder.append(transformer.apply(element));
 		}
 		return builder.toString();
+	}
+
+	public static <T> String join(T[] array, Function<T, String> transformer, CharSequence delimiter)
+	{
+		return join(array, transformer, delimiter, "", "");
+	}
+
+	public static <T> String join(T[] array, Function<T, String> transformer, CharSequence delimiter, CharSequence prefix, CharSequence suffix)
+	{
+		Objects.requireNonNull(array);
+		Objects.requireNonNull(transformer);
+		StringJoiner joiner = new StringJoiner(delimiter, prefix, suffix);
+		for(T element : array)
+		{
+			joiner.add(transformer.apply(element));
+		}
+		return joiner.toString();
 	}
 
 	public static <T> String join(List<T> list, Function<T, String> transformer, CharSequence delimiter)
