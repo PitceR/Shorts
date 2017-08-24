@@ -45,6 +45,27 @@ public final class Conditions
 		return condition ? ifAction.get() : elseAction.get();
 	}
 
+	public static void ifElseIf(boolean ifCondition, Runnable ifAction, boolean elseIfCondition, Runnable elseIfAction)
+	{
+		Objects.requireNonNull(ifAction);
+		Objects.requireNonNull(elseIfAction);
+		if(ifCondition)
+		{
+			ifAction.run();
+		}
+		else if(elseIfCondition)
+		{
+			elseIfAction.run();
+		}
+	}
+
+	public static <T> Optional<T> ifElseIf(boolean ifCondition, Supplier<T> ifAction, boolean elseIfCondition, Supplier<T> elseIfAction)
+	{
+		Objects.requireNonNull(ifAction);
+		Objects.requireNonNull(elseIfAction);
+		return ifCondition ? Optional.of(ifAction.get()) : elseIfCondition ? Optional.of(elseIfAction.get()) : Optional.empty();
+	}
+
 	public static void ifElseIfElse(boolean ifCondition, Runnable ifAction, boolean elseIfCondition, Runnable elseIfAction, Runnable elseAction)
 	{
 		Objects.requireNonNull(ifAction);
