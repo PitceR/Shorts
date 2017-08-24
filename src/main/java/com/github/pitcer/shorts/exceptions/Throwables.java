@@ -18,7 +18,8 @@ public final class Throwables
 			tryAction.run();
 		}
 		catch(Throwable ignored)
-		{}
+		{
+		}
 	}
 
 	public static <T> Optional<T> tryCatch(ThrowsSupplier<T> tryAction)
@@ -127,6 +128,115 @@ public final class Throwables
 		finally
 		{
 			finallyAction.run();
+		}
+	}
+
+	public static ThrowablesRunnerBuilder builder(ThrowsRunnable tryAction)
+	{
+		Objects.requireNonNull(tryAction);
+		return new ThrowablesRunnerBuilder(tryAction);
+	}
+
+	public static <T> ThrowablesGetterBuilder<T> builder(ThrowsSupplier<T> tryAction)
+	{
+		Objects.requireNonNull(tryAction);
+		return new ThrowablesGetterBuilder<>(tryAction);
+	}
+
+	public static final class ThrowablesRunnerBuilder
+	{
+		private ThrowsRunnable tryAction;
+		private Consumer<Throwable> catchAction;
+		private Runnable finallyAction;
+
+		private ThrowablesRunnerBuilder(ThrowsRunnable tryAction)
+		{
+			this.tryAction = tryAction;
+		}
+
+		public ThrowablesRunnerBuilder addCatch(Consumer<Throwable> catchAction)
+		{
+			Objects.requireNonNull(catchAction);
+			this.catchAction = catchAction;
+			return this;
+		}
+
+		public ThrowablesRunnerBuilder addFinally(Runnable finallyAction)
+		{
+			Objects.requireNonNull(finallyAction);
+			this.finallyAction = finallyAction;
+			return this;
+		}
+
+		public void build()
+		{
+			try
+			{
+				this.tryAction.run();
+			}
+			catch(Throwable throwable)
+			{
+				if(Objects.nonNull(this.catchAction))
+				{
+					this.catchAction.accept(throwable);
+				}
+			}
+			finally
+			{
+				if(Objects.nonNull(this.finallyAction))
+				{
+					this.finallyAction.run();
+				}
+			}
+		}
+	}
+
+	public static final class ThrowablesGetterBuilder<T>
+	{
+		private ThrowsSupplier<T> tryAction;
+		private Consumer<Throwable> catchAction;
+		private Runnable finallyAction;
+
+		private ThrowablesGetterBuilder(ThrowsSupplier<T> tryAction)
+		{
+			this.tryAction = tryAction;
+		}
+
+		public ThrowablesGetterBuilder<T> addCatch(Consumer<Throwable> catchAction)
+		{
+			Objects.requireNonNull(catchAction);
+			this.catchAction = catchAction;
+			return this;
+		}
+
+		public ThrowablesGetterBuilder<T> addFinally(Runnable finallyAction)
+		{
+			Objects.requireNonNull(finallyAction);
+			this.finallyAction = finallyAction;
+			return this;
+		}
+
+		public Optional<T> build()
+		{
+			try
+			{
+				return Optional.of(this.tryAction.get());
+			}
+			catch(Throwable throwable)
+			{
+				if(Objects.nonNull(this.catchAction))
+				{
+					this.catchAction.accept(throwable);
+				}
+				return Optional.empty();
+			}
+			finally
+			{
+				if(Objects.nonNull(this.finallyAction))
+				{
+					this.finallyAction.run();
+				}
+			}
 		}
 	}
 }

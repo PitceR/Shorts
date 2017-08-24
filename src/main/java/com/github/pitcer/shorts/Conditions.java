@@ -92,4 +92,97 @@ public final class Conditions
 		Objects.requireNonNull(elseAction);
 		return ifCondition ? ifAction.get() : elseIfCondition ? elseIfAction.get() : elseAction.get();
 	}
+
+	public static ConditionsRunnerBuilder builder(boolean ifCondition, Runnable ifAction)
+	{
+		Objects.requireNonNull(ifAction);
+		return new ConditionsRunnerBuilder(ifCondition, ifAction);
+	}
+
+	public static <T> ConditionsGetterBuilder<T> builder(boolean ifCondition, Supplier<T> ifAction)
+	{
+		Objects.requireNonNull(ifAction);
+		return new ConditionsGetterBuilder<>(ifCondition, ifAction);
+	}
+
+	public static final class ConditionsRunnerBuilder
+	{
+		private boolean ifCondition;
+		private Runnable ifAction;
+		private boolean elseIfCondition;
+		private Runnable elseIfAction;
+		private Runnable elseAction;
+
+		private ConditionsRunnerBuilder(boolean ifCondition, Runnable ifAction)
+		{
+			this.ifCondition = ifCondition;
+			this.ifAction = ifAction;
+		}
+
+		public ConditionsRunnerBuilder addElseIf(boolean elseIfCondition, Runnable elseIfAction)
+		{
+			Objects.requireNonNull(elseIfAction);
+			this.elseIfCondition = elseIfCondition;
+			this.elseIfAction = elseIfAction;
+			return this;
+		}
+
+		public ConditionsRunnerBuilder addElse(Runnable elseAction)
+		{
+			Objects.requireNonNull(elseAction);
+			this.elseAction = elseAction;
+			return this;
+		}
+
+		public void build()
+		{
+			if(this.ifCondition)
+			{
+				this.ifAction.run();
+			}
+			else if(this.elseIfCondition)
+			{
+				this.elseIfAction.run();
+			}
+			else if(Objects.nonNull(this.elseAction))
+			{
+				this.elseAction.run();
+			}
+		}
+	}
+
+	public static final class ConditionsGetterBuilder<T>
+	{
+		private boolean ifCondition;
+		private Supplier<T> ifAction;
+		private boolean elseIfCondition;
+		private Supplier<T> elseIfAction;
+		private Supplier<T> elseAction;
+
+		private ConditionsGetterBuilder(boolean ifCondition, Supplier<T> ifAction)
+		{
+			this.ifCondition = ifCondition;
+			this.ifAction = ifAction;
+		}
+
+		public ConditionsGetterBuilder<T> addElseIf(boolean elseIfCondition, Supplier<T> elseIfAction)
+		{
+			Objects.requireNonNull(elseIfAction);
+			this.elseIfCondition = elseIfCondition;
+			this.elseIfAction = elseIfAction;
+			return this;
+		}
+
+		public ConditionsGetterBuilder<T> addElse(Supplier<T> elseAction)
+		{
+			Objects.requireNonNull(elseAction);
+			this.elseAction = elseAction;
+			return this;
+		}
+
+		public Optional<T> build()
+		{
+			return this.ifCondition ? Optional.of(this.ifAction.get()) : this.elseIfCondition ? Optional.of(this.elseIfAction.get()) : Objects.nonNull(this.elseAction) ? Optional.of(this.elseAction.get()) : Optional.empty();
+		}
+	}
 }
