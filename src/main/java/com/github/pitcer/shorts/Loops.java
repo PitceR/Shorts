@@ -99,6 +99,21 @@ public final class Loops
 		return Optional.empty();
 	}
 
+	public static <T> List<T> collect(T[] array, Predicate<T> filter)
+	{
+		Objects.requireNonNull(array);
+		Objects.requireNonNull(filter);
+		List<T> collected = new ArrayList<>(array.length);
+		for(T element : array)
+		{
+			if(filter.test(element))
+			{
+				collected.add(element);
+			}
+		}
+		return collected;
+	}
+
 	public static <T> List<T> collect(List<T> list, Predicate<T> filter)
 	{
 		Objects.requireNonNull(list);
@@ -112,6 +127,18 @@ public final class Loops
 			}
 		}
 		return collected;
+	}
+
+	public static <T, R> List<R> transform(T[] array, Function<T, R> transformer)
+	{
+		Objects.requireNonNull(array);
+		Objects.requireNonNull(transformer);
+		List<R> transformed = new ArrayList<>(array.length);
+		for(T element : array)
+		{
+			transformed.add(transformer.apply(element));
+		}
+		return transformed;
 	}
 
 	public static <T, R> List<R> transform(List<T> list, Function<T, R> transformer)
