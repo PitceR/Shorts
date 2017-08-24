@@ -10,6 +10,30 @@ public final class Throwables
 	private Throwables()
 	{}
 
+	public static void tryCatch(ThrowsRunnable tryAction)
+	{
+		Objects.requireNonNull(tryAction);
+		try
+		{
+			tryAction.run();
+		}
+		catch(Throwable ignored)
+		{}
+	}
+
+	public static <T> Optional<T> tryCatch(ThrowsSupplier<T> tryAction)
+	{
+		Objects.requireNonNull(tryAction);
+		try
+		{
+			return Optional.of(tryAction.get());
+		}
+		catch(Throwable throwable)
+		{
+			return Optional.empty();
+		}
+	}
+
 	public static void tryCatch(ThrowsRunnable tryAction, Consumer<Throwable> catchAction)
 	{
 		Objects.requireNonNull(tryAction);
