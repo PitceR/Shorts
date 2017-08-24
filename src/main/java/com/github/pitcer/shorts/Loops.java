@@ -153,6 +153,18 @@ public final class Loops
 		return transformed;
 	}
 
+	public static <T> String build(List<T> list, Function<T, String> transformer)
+	{
+		Objects.requireNonNull(list);
+		Objects.requireNonNull(transformer);
+		StringBuilder builder = new StringBuilder();
+		for(T element : list)
+		{
+			builder.append(transformer.apply(element));
+		}
+		return builder.toString();
+	}
+
 	public static <T> String join(List<T> list, Function<T, String> transformer, CharSequence delimiter)
 	{
 		return join(list, transformer, delimiter, "", "");
