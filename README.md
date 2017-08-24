@@ -3,6 +3,12 @@ Shorts is a simple API using Java 1.8 functional interfaces which allows you to 
 ## Example
 Normal:
 ```java
+for(int index = 0; index < 50; index++)
+{
+    System.out.println(index);
+}
+```
+```java
 String text = "Foo";
 if(text.isEmpty())
 {
@@ -14,18 +20,29 @@ else
 }
 ```
 ```java
-for(int index = 0; index < 50; index++)
+File file = new File("foobar");
+BufferedImage image;
+try
 {
-    System.out.println(index);
+    image = ImageIO.read(file);
+}
+catch(IOException exception)
+{	
+    exception.printStackTrace();
+    image = null;
 }
 ```
 Simplified:
+```java
+Loops.loop(50, System.out::println);
+```
 ```java
 String text = "Foo";
 Conditions.ifElse(text.isEmpty(), () -> System.out.println("Bar"), () -> System.out.println("Foo Bar"));
 ```
 ```java
-Loops.loop(50, System.out::println);
+File file = new File("foobar");
+BufferedImage image = Throwables.tryCatch(() -> ImageIO.read(file), Throwable::printStackTrace).orElse(null);
 ```
 ## Building
 Download source and run `mvn clean install`. Make sure you have installed latest version of Maven.
