@@ -1,5 +1,5 @@
 # Shorts
-Shorts is a simple API using Java 1.8 functional interfaces which allows you to reduce boilerplate code.
+Shorts is a simple utility using Java 1.8 functional interfaces which allows you to reduce boilerplate code.
 ## Example
 Normal:
 ```java
