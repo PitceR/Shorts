@@ -14,6 +14,15 @@ public final class Loops
 	private Loops()
 	{}
 
+	public static void infinity(Runnable action)
+	{
+		Objects.requireNonNull(action);
+		while(true)
+		{
+			action.run();
+		}
+	}
+
 	public static void loop(int times, Consumer<Integer> action)
 	{
 		Objects.requireNonNull(action);
