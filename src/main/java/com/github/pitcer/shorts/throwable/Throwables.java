@@ -1,16 +1,18 @@
-package com.github.pitcer.shorts.exceptions;
+package com.github.pitcer.shorts.throwable;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import com.github.pitcer.shorts.throwable.function.ThrowableRunnable;
+import com.github.pitcer.shorts.throwable.function.ThrowableSupplier;
 
 public final class Throwables
 {
 	private Throwables()
 	{}
 
-	public static void tryCatch(ThrowsRunnable tryAction)
+	public static void tryCatch(ThrowableRunnable tryAction)
 	{
 		Objects.requireNonNull(tryAction);
 		try
@@ -22,7 +24,7 @@ public final class Throwables
 		}
 	}
 
-	public static <T> Optional<T> tryCatch(ThrowsSupplier<T> tryAction)
+	public static <T> Optional<T> tryCatch(ThrowableSupplier<T> tryAction)
 	{
 		Objects.requireNonNull(tryAction);
 		try
@@ -35,7 +37,7 @@ public final class Throwables
 		}
 	}
 
-	public static void tryCatch(ThrowsRunnable tryAction, Consumer<Throwable> catchAction)
+	public static void tryCatch(ThrowableRunnable tryAction, Consumer<Throwable> catchAction)
 	{
 		Objects.requireNonNull(tryAction);
 		Objects.requireNonNull(catchAction);
@@ -49,7 +51,7 @@ public final class Throwables
 		}
 	}
 
-	public static <T> Optional<T> tryCatch(ThrowsSupplier<T> tryAction, Consumer<Throwable> catchAction)
+	public static <T> Optional<T> tryCatch(ThrowableSupplier<T> tryAction, Consumer<Throwable> catchAction)
 	{
 		Objects.requireNonNull(tryAction);
 		Objects.requireNonNull(catchAction);
@@ -92,7 +94,7 @@ public final class Throwables
 		}
 	}
 
-	public static void tryCatchFinally(ThrowsRunnable tryAction, Consumer<Throwable> catchAction, Runnable finallyAction)
+	public static void tryCatchFinally(ThrowableRunnable tryAction, Consumer<Throwable> catchAction, Runnable finallyAction)
 	{
 		Objects.requireNonNull(tryAction);
 		Objects.requireNonNull(catchAction);
@@ -111,7 +113,7 @@ public final class Throwables
 		}
 	}
 
-	public static <T> Optional<T> tryCatchFinally(ThrowsSupplier<T> tryAction, Consumer<Throwable> catchAction, Runnable finallyAction)
+	public static <T> Optional<T> tryCatchFinally(ThrowableSupplier<T> tryAction, Consumer<Throwable> catchAction, Runnable finallyAction)
 	{
 		Objects.requireNonNull(tryAction);
 		Objects.requireNonNull(catchAction);
@@ -131,13 +133,13 @@ public final class Throwables
 		}
 	}
 
-	public static ThrowablesRunnerBuilder builder(ThrowsRunnable tryAction)
+	public static ThrowablesRunnerBuilder builder(ThrowableRunnable tryAction)
 	{
 		Objects.requireNonNull(tryAction);
 		return new ThrowablesRunnerBuilder(tryAction);
 	}
 
-	public static <T> ThrowablesGetterBuilder<T> builder(ThrowsSupplier<T> tryAction)
+	public static <T> ThrowablesGetterBuilder<T> builder(ThrowableSupplier<T> tryAction)
 	{
 		Objects.requireNonNull(tryAction);
 		return new ThrowablesGetterBuilder<>(tryAction);
@@ -145,11 +147,11 @@ public final class Throwables
 
 	public static final class ThrowablesRunnerBuilder
 	{
-		private ThrowsRunnable tryAction;
+		private ThrowableRunnable tryAction;
 		private Consumer<Throwable> catchAction;
 		private Runnable finallyAction;
 
-		private ThrowablesRunnerBuilder(ThrowsRunnable tryAction)
+		private ThrowablesRunnerBuilder(ThrowableRunnable tryAction)
 		{
 			this.tryAction = tryAction;
 		}
@@ -193,11 +195,11 @@ public final class Throwables
 
 	public static final class ThrowablesGetterBuilder<T>
 	{
-		private ThrowsSupplier<T> tryAction;
+		private ThrowableSupplier<T> tryAction;
 		private Consumer<Throwable> catchAction;
 		private Runnable finallyAction;
 
-		private ThrowablesGetterBuilder(ThrowsSupplier<T> tryAction)
+		private ThrowablesGetterBuilder(ThrowableSupplier<T> tryAction)
 		{
 			this.tryAction = tryAction;
 		}
