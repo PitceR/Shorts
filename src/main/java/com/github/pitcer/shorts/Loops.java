@@ -89,6 +89,34 @@ public final class Loops
 		}
 	}
 
+	public static <T> boolean contains(T[] array, Predicate<T> filter)
+	{
+		Objects.requireNonNull(array);
+		Objects.requireNonNull(filter);
+		for(T element : array)
+		{
+			if(filter.test(element))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public static <T> boolean contains(Iterable<T> iterable, Predicate<T> filter)
+	{
+		Objects.requireNonNull(iterable);
+		Objects.requireNonNull(filter);
+		for(T element : iterable)
+		{
+			if(filter.test(element))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static <T> Optional<T> find(T[] array, Predicate<T> filter)
 	{
 		Objects.requireNonNull(array);
