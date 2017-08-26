@@ -211,12 +211,12 @@ public final class Loops
 		return builder.toString();
 	}
 
-	public static <T> String build(List<T> list, Function<T, String> transformer)
+	public static <T> String build(Iterable<T> iterable, Function<T, String> transformer)
 	{
-		Objects.requireNonNull(list);
+		Objects.requireNonNull(iterable);
 		Objects.requireNonNull(transformer);
 		StringBuilder builder = new StringBuilder();
-		for(T element : list)
+		for(T element : iterable)
 		{
 			builder.append(transformer.apply(element));
 		}
@@ -240,17 +240,17 @@ public final class Loops
 		return joiner.toString();
 	}
 
-	public static <T> String join(List<T> list, Function<T, String> transformer, CharSequence delimiter)
+	public static <T> String join(Iterable<T> iterable, Function<T, String> transformer, CharSequence delimiter)
 	{
-		return join(list, transformer, delimiter, "", "");
+		return join(iterable, transformer, delimiter, "", "");
 	}
 
-	public static <T> String join(List<T> list, Function<T, String> transformer, CharSequence delimiter, CharSequence prefix, CharSequence suffix)
+	public static <T> String join(Iterable<T> iterable, Function<T, String> transformer, CharSequence delimiter, CharSequence prefix, CharSequence suffix)
 	{
-		Objects.requireNonNull(list);
+		Objects.requireNonNull(iterable);
 		Objects.requireNonNull(transformer);
 		StringJoiner joiner = new StringJoiner(delimiter, prefix, suffix);
-		for(T element : list)
+		for(T element : iterable)
 		{
 			joiner.add(transformer.apply(element));
 		}
