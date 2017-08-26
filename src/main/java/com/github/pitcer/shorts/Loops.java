@@ -23,6 +23,15 @@ public final class Loops
 		}
 	}
 
+	public static void loop(boolean condition, Runnable action)
+	{
+		Objects.requireNonNull(action);
+		while(condition)
+		{
+			action.run();
+		}
+	}
+
 	public static void loop(int times, Consumer<Integer> action)
 	{
 		Objects.requireNonNull(action);
