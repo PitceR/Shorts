@@ -32,6 +32,15 @@ public final class Loops
 		}
 	}
 
+	public static void loop(int times, Runnable action)
+	{
+		Objects.requireNonNull(action);
+		for(int index = 0; index < times; index++)
+		{
+			action.run();
+		}
+	}
+
 	public static void loop(int times, Consumer<Integer> action)
 	{
 		Objects.requireNonNull(action);
