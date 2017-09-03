@@ -1,7 +1,9 @@
 package com.github.pitcer.shorts;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.StringJoiner;
@@ -204,6 +206,32 @@ public final class Loops
 		for(T element : list)
 		{
 			transformed.add(transformer.apply(element));
+		}
+		return transformed;
+	}
+
+	public static <T, K, V> Map<K, V> transform(T[] array, Function<T, K> keyTransformer,  Function<T, V> valueTransformer)
+	{
+		Objects.requireNonNull(array);
+		Objects.requireNonNull(keyTransformer);
+		Objects.requireNonNull(valueTransformer);
+		Map<K, V> transformed = new HashMap<>(array.length);
+		for(T element : array)
+		{
+			transformed.put(keyTransformer.apply(element), valueTransformer.apply(element));
+		}
+		return transformed;
+	}
+
+	public static <T, K, V> Map<K, V> transform(List<T> list, Function<T, K> keyTransformer,  Function<T, V> valueTransformer)
+	{
+		Objects.requireNonNull(list);
+		Objects.requireNonNull(keyTransformer);
+		Objects.requireNonNull(valueTransformer);
+		Map<K, V> transformed = new HashMap<>(list.size());
+		for(T element : list)
+		{
+			transformed.put(keyTransformer.apply(element), valueTransformer.apply(element));
 		}
 		return transformed;
 	}
