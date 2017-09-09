@@ -3,6 +3,7 @@ package com.github.pitcer.shorts.throwable;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import com.github.pitcer.shorts.throwable.function.ThrowableRunnable;
 import com.github.pitcer.shorts.throwable.function.ThrowableSupplier;
@@ -21,6 +22,20 @@ public final class Throwables
 		}
 		catch(Throwable ignored)
 		{
+		}
+	}
+
+	public static <T extends Throwable> void tryCatchThrow(ThrowableRunnable tryAction, Function<Throwable, T> throwAction) throws T
+	{
+		Objects.requireNonNull(tryAction);
+		Objects.requireNonNull(throwAction);
+		try
+		{
+			tryAction.run();
+		}
+		catch(Throwable exception)
+		{
+			throw throwAction.apply(exception);
 		}
 	}
 

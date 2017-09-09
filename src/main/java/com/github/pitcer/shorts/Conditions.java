@@ -18,6 +18,15 @@ public final class Conditions
 		}
 	}
 
+	public static <T extends Throwable> void ifThenThrow(boolean condition, Supplier<T> throwAction) throws T
+	{
+		Objects.requireNonNull(throwAction);
+		if(condition)
+		{
+			throw throwAction.get();
+		}
+	}
+
 	public static <T> Optional<T> ifThen(boolean condition, Supplier<T> action)
 	{
 		Objects.requireNonNull(action);
