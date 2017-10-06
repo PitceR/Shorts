@@ -2,6 +2,9 @@ package com.github.pitcer.shorts;
 
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public final class Conditions
@@ -18,6 +21,16 @@ public final class Conditions
 		}
 	}
 
+	public static <T> void ifThen(T object, Predicate<T> condition, Consumer<T> action)
+	{
+		Objects.requireNonNull(condition);
+		Objects.requireNonNull(action);
+		if(condition.test(object))
+		{
+			action.accept(object);
+		}
+	}
+
 	public static <T extends Throwable> void ifThenThrow(boolean condition, Supplier<T> throwAction) throws T
 	{
 		Objects.requireNonNull(throwAction);
@@ -31,6 +44,13 @@ public final class Conditions
 	{
 		Objects.requireNonNull(action);
 		return condition ? Optional.of(action.get()) : Optional.empty();
+	}
+
+	public static <T, R> Optional<R> ifThen(T object, Predicate<T> condition, Function<T, R> action)
+	{
+		Objects.requireNonNull(condition);
+		Objects.requireNonNull(action);
+		return condition.test(object) ? Optional.of(action.apply(object)) : Optional.empty();
 	}
 
 	public static void ifElse(boolean condition, Runnable ifAction, Runnable elseAction)
