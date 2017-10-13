@@ -1,4 +1,4 @@
-package com.github.pitcer.shorts.throwable.function;
+package pl.pitkour.shorts.throwable.function;
 
 @FunctionalInterface
 public interface ThrowablePredicate<T>

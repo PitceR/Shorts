@@ -1,4 +1,4 @@
-package com.github.pitcer.shorts;
+package pl.pitkour.shorts;
 
 import java.util.Objects;
 import java.util.concurrent.locks.ReentrantLock;

@@ -1,12 +1,12 @@
-package com.github.pitcer.shorts.throwable;
+package pl.pitkour.shorts.throwable;
 
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-import com.github.pitcer.shorts.throwable.function.ThrowableRunnable;
-import com.github.pitcer.shorts.throwable.function.ThrowableSupplier;
+import pl.pitkour.shorts.throwable.function.ThrowableRunnable;
+import pl.pitkour.shorts.throwable.function.ThrowableSupplier;
 
 public final class Throwables
 {
