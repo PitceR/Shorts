@@ -1,4 +1,4 @@
-# Shorts [![Build Status](https://travis-ci.org/PitceR/shorts.svg?branch=master)](https://travis-ci.org/PitceR/shorts)
+# Shorts [![Build Status](https://travis-ci.org/pitcer/shorts.svg?branch=master)](https://travis-ci.org/pitcer/shorts)
 Shorts is a simple utility using Java 1.8 functional interfaces which allows you to reduce boilerplate code.
 ## Example
 Normal:
